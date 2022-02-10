@@ -1,14 +1,13 @@
-# to initialize this into your .bashrc profile (or .zsh etc) add an export to this file
+# to initialize this into your .bashrc profile (or .zsh etc) this file needs to be 'sourced'
 # make sure to initialize the "$scriptpath" variable somewhere (can be in .bashrc, etc)
 # make sure to initialize the "$ngrokprofile" variable somewhere (can be in .bashrc, etc)
 # e.g. 
-# if [ -f /home/stevanvanderwerf/code/tools/sqfunction.sh ]; then
+# if [ -f ~/code/tools/sqfunction.sh ]; then
 #     echo -n "sourcing ../tools/sqfunction.sh"
-#     source /home/stevanvanderwerf/code/tools/sqfunction.sh && echo "...done" || echo "...FAIL"
+#     source ~/code/tools/sqfunction.sh && echo "...done" || echo "...FAIL"
 # fi
-# export scriptpath='/home/stevanvanderwerf/code/tools'
+# export scriptpath='~/code/tools'
 # export ngrokprofile='sq'
-
 
 # ngrok status
 alias ngst='jobs'
@@ -43,7 +42,6 @@ dockerexec() {
     docker exec -it "$1" /bin/bash
 }
 alias dkssh="dockerexec sqb"
-
 
 # gets all the available Docker tags, you can narrow down the list by specifying the version:
 # e.g. dktags enterprise
