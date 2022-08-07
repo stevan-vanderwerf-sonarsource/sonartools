@@ -21,6 +21,17 @@ myenv = {
     "SQ_VERSION": str(tag)
 }
 
-process = subprocess.Popen(['docker-compose', '--file', "/home/stevanvanderwerf/code/tools/docker-compose.yml.bak2", '--verbose', 'up', '-d'], env=myenv)
+# enables the ability to spin up another instance of a different version to compare
+compare = True
+docker_compose_file = 'docker-compose_script_compare.yml' if compare else 'docker-compose_script.yml'
+
+process = subprocess.Popen([ \
+    'docker-compose', \
+    '--file', "/home/stevanvanderwerf/code/tools/" + docker_compose_file, \
+    '--verbose', \
+    'up', \
+    '-d'], \
+    env=myenv)
+
 process.wait()
 print("Completed!")
