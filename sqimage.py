@@ -37,4 +37,3 @@ process_cmd = f"docker-compose --file /home/stevanvanderwerf/code/tools/{docker_
 process = subprocess.Popen(process_cmd, shell=True, env=myenv)
 
 process.wait()
-print("Completed!")
