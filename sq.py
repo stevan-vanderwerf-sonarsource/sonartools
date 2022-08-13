@@ -10,10 +10,14 @@ def parse_cli_args():
 
     # positional argument
     my_parser.add_argument(
-        'up',
-        metavar='up',
+        '-up',
         type=str,
         help='SQ edition and version e.g. ee899')
+
+    my_parser.add_argument(
+        '-dn',
+        action='store_true',
+        help='docker-compose down')
 
     # optional arguments
     my_parser.add_argument(

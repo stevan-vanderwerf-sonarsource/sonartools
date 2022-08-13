@@ -13,8 +13,10 @@ def main():
     }
 
     output = parse_cli_args()
-    # e.g. ee950
-    version = output.up
+    print(output)
+
+    # e.g. ee950 - if statement to catch sq dn
+    version = output.up if output.up else ''
     # e.g. 9.5.0-enterprise
     tag = tags.get(version)
     # e.g. 950
@@ -47,9 +49,13 @@ def main():
     docker_compose_file = 'docker-compose_script_compare.yml' if compare else 'docker-compose_script.yml'
 
     # enables ability to add parameters for db options, version 1.28.0 or later of docker-compose is required for --profile
-    profile = "up" if db_type == 'h2' else "--profile dbs up"
+    profile = "" if db_type == 'h2' else "--profile dbs"
 
-    process_cmd = f"docker-compose --file ./{docker_compose_file} --verbose {profile} -d"
+    state = 'down' if output.dn == True else 'up -d'
+    print(state)
+
+    process_cmd = f"docker-compose --file ./{docker_compose_file} --verbose {profile} {state}"
+    print(process_cmd)
     process = subprocess.Popen(process_cmd, shell=True, env=myenv)
 
     process.wait()
