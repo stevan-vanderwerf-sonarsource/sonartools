@@ -12,6 +12,9 @@ def parse_cli_args():
     my_parser.add_argument(
         '-up',
         type=str,
+        # nargs='?',
+        # const=9000, # default value for when -dn is used
+        default='ee950', # needs to be set to force value for -up when -dn is called
         help='SQ edition and version e.g. ee899')
 
     my_parser.add_argument(
@@ -31,13 +34,14 @@ def parse_cli_args():
         '--database',
         action='store',
         nargs=1,
-        choices=['pg', 'ms', 'orc'],
+        choices=['pg', 'ms', 'or'],
+        help='choose external database')
+
+    my_parser.add_argument(
+        '-c',
+        '--compare',
+        action='store_true',
         help='choose external database')
 
     args = my_parser.parse_args()
     return args
-
-# print(args)
-# print(args.up)
-# print(args.database)
-
