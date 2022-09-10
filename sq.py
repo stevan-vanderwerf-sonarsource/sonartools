@@ -12,8 +12,6 @@ def parse_cli_args():
     my_parser.add_argument(
         '-up',
         type=str,
-        # nargs='?',
-        # const=9000, # default value for when -dn is used
         default='ee950', # needs to be set to force value for -up when -dn is called
         help='SQ edition and version e.g. ee899')
 
