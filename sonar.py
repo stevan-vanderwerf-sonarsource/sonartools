@@ -1,12 +1,10 @@
 from sonarargs import parse_cli_args
 import subprocess
 import os
-import sys
 import socket
 import json
 import sonartagfetch as dr
 import sonartagprocess
-import time
 
 def main():
     """Parses user input and passes those values to the Container object"""
@@ -15,8 +13,6 @@ def main():
     print(output)
 
     if output.up or output.dn:
-        tic = time.perf_counter()
-        print('updating tags')
         # updates docker tags, should only take < 1 second)
         dr.update_tags()
         sonartagprocess.update_dictionary()
@@ -25,9 +21,6 @@ def main():
         with open('sonartagdictionary.json') as f:
             data = f.read()
         tags = json.loads(data)
-        print('done updating tags')
-        toc = time.perf_counter()
-        print(f"updated tags in {toc - tic:0.4f} seconds")
 
         # e.g. ee950 - if statement to catch sq dn
         version = output.up
@@ -65,9 +58,10 @@ def main():
         # enables ability to add parameters for db options, version 1.28.0 or later of docker-compose is required for --profile
         profile = "--profile sqh2" if db_type == 'h2' else "--profile dbs --profile sqdb"
 
-        state = 'down' if output.dn == True else 'up -d'
+        # 'up' state has additional logging so user can see sonarqube instance status
+        state = 'down' if output.dn == True else f"up -d && sleep 5 && docker exec -it sq{tag_num} tail -f logs/sonar.log"
 
-        process_cmd = f"docker-compose --file {docker_compose_file} {profile} {state} && sleep 5 && docker exec -it sq{tag_num} tail -f logs/sonar.log"
+        process_cmd = f"docker-compose --file {docker_compose_file} {profile} {state}"
         print(process_cmd)
         process = subprocess.Popen(process_cmd, shell=True, env=myenv)
 

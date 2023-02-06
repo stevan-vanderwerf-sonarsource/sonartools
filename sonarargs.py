@@ -1,6 +1,4 @@
 import argparse
-import os
-import sys
 
 def parse_cli_args():
     
@@ -56,7 +54,7 @@ def parse_cli_args():
         '--help',
         action='help',
         default=argparse.SUPPRESS,
-        help='run any version or edition of SQ in a docker containerzzzzz')       
+        help='run any version or edition of dockerhub official images of sonarqube in a docker container')       
 
     args = my_parser.parse_args()
     return args
