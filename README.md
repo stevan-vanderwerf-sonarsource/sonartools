@@ -17,6 +17,14 @@ To make things easier you can add the following lines to your `~/.bashrc` file:
     alias sonar='[path-to-project]/sonar.py'
     
 # Usage examples
-`sonarup ee980` - spins up the v9.8.0 version of SonarQube Docker image
-`sonardn`       - spins down the running Docker image
-`sonar -h`      - prints the command parameter options and their description
+spins up the v9.8.0 version of SonarQube Docker image:
+
+    sonarup ee980
+    
+spins down the running Docker image:
+
+    sonardn
+    
+prints the command parameter options and their description:    
+
+    sonar -h
