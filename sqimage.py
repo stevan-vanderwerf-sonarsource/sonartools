@@ -1,12 +1,19 @@
 import subprocess
 import os
 import sys
+import json
 
 # from https://github.com/axil/docker-registry-list
-tags = {
-    "ee950":"9.5.0-enterprise",
-    "ee899":"8.9.9-enterprise"
-}
+# tags = {
+#     "ee950":"9.5.0-enterprise",
+#     "ee899":"8.9.9-enterprise"
+# }
+
+with open('sqtagdictionary.json') as f:
+    data = f.read()
+# reconstructing the data as a dictionary
+tags = json.loads(data)
+print(tags)
 
 # e.g. ee950
 version = sys.argv[1]

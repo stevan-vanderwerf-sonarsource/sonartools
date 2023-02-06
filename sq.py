@@ -6,9 +6,10 @@ def parse_cli_args():
     
     my_parser = argparse.ArgumentParser(
         prog='sq', 
+        add_help=False,
         description='run any version or edition of SQ in a docker container')
 
-    # positional argument
+    # positional arguments
     my_parser.add_argument(
         '-up',
         type=str,
@@ -36,10 +37,26 @@ def parse_cli_args():
         help='choose external database')
 
     my_parser.add_argument(
+        '-dbv',
+        '--databaseversion',
+        action='store',
+        nargs=1,
+        choices=['9.6', '10', '11', '12', '13', '14', '15', '2017', '2019', '18', '21'],
+        help='choose external database version')
+
+
+    my_parser.add_argument(
         '-c',
         '--compare',
         action='store_true',
-        help='choose external database')
+        help='runs a second instance of SQ beside and existing one')   
+
+    my_parser.add_argument(
+        '-h',
+        '--help',
+        action='help',
+        default=argparse.SUPPRESS,
+        help='run any version or edition of SQ in a docker containerzzzzz')       
 
     args = my_parser.parse_args()
     return args

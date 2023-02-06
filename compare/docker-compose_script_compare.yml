@@ -11,17 +11,36 @@ services:
       - ~/sq/${SQ_VERSION}-${DB}/sqConf:/opt/sonarqube/conf
       - ~/sq/${SQ_VERSION}-${DB}/sqLogs:/opt/sonarqube/logs
       - ~/sq/${SQ_VERSION}-${DB}/sqData:/opt/sonarqube/data
+    profiles:
+      - sqh2
+  sqpg_compare:
+    container_name: sq${BUILD}
+    image: sonarqube:${SQ_VERSION}
+    ports:
+    - 9${BUILD}:9000
+    environment:
+      SONAR_JDBC_USERNAME: ${SONAR_JDBC_USERNAME}
+      SONAR_JDBC_PASSWORD: ${SONAR_JDBC_PASSWORD}
+      SONAR_JDBC_URL: ${SONAR_JDBC_URL}
+      SONAR_LOG_LEVEL: DEBUG
+    volumes:
+      - ~/sq/${SQ_VERSION}-${DB}/sqExtensions:/opt/sonarqube/extensions/plugins
+      - ~/sq/${SQ_VERSION}-${DB}/sqConf:/opt/sonarqube/conf
+      - ~/sq/${SQ_VERSION}-${DB}/sqLogs:/opt/sonarqube/logs
+      - ~/sq/${SQ_VERSION}-${DB}/sqData:/opt/sonarqube/data
+    profiles:
+      - sqdb
   db_compare:
-    container_name: pgsql-${SQ_VERSION}
-    image: postgres:10
+    container_name: pgsql-${DB_VERSION}-${SQ_VERSION}
+    image: postgres:${DB_VERSION}
     ports:
       - 5${BUILD}:5432
     environment:
-      POSTGRES_USER: sonar
-      POSTGRES_PASSWORD: sonar
+      POSTGRES_USER: ${SONAR_JDBC_USERNAME}
+      POSTGRES_PASSWORD: ${SONAR_JDBC_PASSWORD}
       POSTGRES_DB: sonardb
     volumes:
-      - ~/sq/${SQ_VERSION}-${DB}/postgres:/var/lib/postgresql/data
+      - ~/sq/${SQ_VERSION}-${DB}-${DB_VERSION}/postgres:/var/lib/postgresql/data
     profiles:
       - dbs
 volumes:
