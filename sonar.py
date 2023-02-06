@@ -1,11 +1,11 @@
-from sq import parse_cli_args
+from sonarargs import parse_cli_args
 import subprocess
 import os
 import sys
 import socket
 import json
-import dockerregistrylist as dr
-import sqtag
+import sonartagfetch as dr
+import sonartagprocess
 import time
 
 def main():
@@ -19,10 +19,10 @@ def main():
         print('updating tags')
         # updates docker tags, should only take < 1 second)
         dr.update_tags()
-        sqtag.update_dictionary()
+        sonartagprocess.update_dictionary()
 
         # loads the docker tags data as a dictionary
-        with open('sqtagdictionary.json') as f:
+        with open('sonartagdictionary.json') as f:
             data = f.read()
         tags = json.loads(data)
         print('done updating tags')
