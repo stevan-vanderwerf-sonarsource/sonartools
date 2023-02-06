@@ -1,34 +1,22 @@
-# tools
-Tools for testing multiple versions of SonarQube
+# sonarqube tools
+Tools for testing multiple versions of SonarQube using Docker images
 
-# Setup
-The `sqfunctions.sh` file can be initialized into your .bashrc profile (or .zsh etc) through the 'source' command
-e.g. 
+# Pre-requisites
+The pre-requisites for running this script are having docker and docker-compose installed. 
+Additionally, docker-compose needs to be >= v1.28.0 to take advantage of the --profile parameter
 
-    if [ -f ~/code/tools/sqfunction.sh ]; then
-        echo -n "sourcing ../tools/sqfunction.sh"
-        source ~/code/tools/sqfunction.sh && echo "...done" || echo "...FAIL"
-    fi
+# Running script
+The script is run by calling the sonar.py entrypoint, for example:
+`python3 sonar.py -up ee980`
 
-Make sure to initialize the `$scriptpath` and  `$ngrokprofile` variable somewhere (can be in .bashrc, etc)
-e.g.
+# Tips
+To make things easier you can add the following lines to your `~/.bashrc` file:
 
-    export scriptpath='~/code/tools'
-    export ngrokprofile='~/sq'
+    alias sonarup='[path-to-project]/sonar.py -up'
+    alias sonardn='[path-to-project]/sonar.py -dn'
+    alias sonar='[path-to-project]/sonar.py'
     
-# Commands
-Spin up a SonarQube Docker instance:
-
-    squp $ee93
-    
-Spin down current SonarQube Docker instance:
-
-    sqdn
-    
-Open a bash terminal on the running SonarQube Docker instance:
-
-    dkssh
-    
-Get all available Docker tags for SonarQube filtered by type:
-
-    dktags enterprise
+# Usage examples
+`sonarup ee980` - spins up the v9.8.0 version of SonarQube Docker image
+`sonardn`       - spins down the running Docker image
+`sonar -h`      - prints the command parameter options and their description
