@@ -1,4 +1,4 @@
-# sonarqube tools
+# sonar tools
 Tools for testing multiple versions of SonarQube using Docker images
 
 # Pre-requisites
@@ -17,9 +17,9 @@ To make things easier you can add the following lines to your `~/.bashrc` file:
     alias sonar='[path-to-project]/sonar.py'
     
 # Usage examples
-spins up the v9.8.0 version of SonarQube Docker image:
+spins up the v9.9.0 version of SonarQube Docker image:
 
-    sonarup ee980
+    sonarup ee990
     
 spins down the running Docker image:
 
@@ -28,3 +28,32 @@ spins down the running Docker image:
 prints the command parameter options and their description:    
 
     sonar -h
+
+# Advanced examples
+run SonarQube with an external database (currently only Postgres supported in this tool - defaults to Postgres 13)
+
+    sonarup ee990 -db pg
+    
+run SonarQube with a specific version of an external database
+
+    sonarup ee990 -db pg -dbv 15
+    
+# Docker Desktop configuration
+This script can work as a command line tool only, or it can be run in conjunction with Docker Desktop. Check your `docker context` to see if your Docker configuration is command line only or if it is set to 'sync' with Docker Desktop
+
+    # list the available Docker 'contexts'
+    $>  docker context ls
+    $>  NAME                TYPE                DESCRIPTION                               DOCKER ENDPOINT
+        default       *     moby                Current DOCKER_HOST based configuration   unix:///var/run/docker.sock          
+        desktop-linux       moby                                                          unix:///home/user/.docker/desktop/docker.sock
+
+If the context of your terminal is showing to be 'default' then run the following command to change the context to Docker Desktop
+
+    $> docker context use $(docker context ls | grep desktop | cut -d ' ' -f 1)
+    
+# Volumes
+By default when each SonarQube version is spun up it will create 4 volumes:
+* db        - persists the contents of the database
+* esdata    - persists the the data folder
+* logs      - persists the logs folder
+* plugins   - persists the plugins folder
