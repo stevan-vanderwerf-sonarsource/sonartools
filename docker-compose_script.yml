@@ -2,37 +2,43 @@ version: '3.7'
 
 services:
   sq:
-    container_name: sq${BUILD}
-    image: sonarqube:${SQ_VERSION}
+    container_name: sqtester${BUILD}
+    image: sonarqube:${DOCKER_FULL_TAG}
+    # the container needs to start inside as root which maps to the outside rootless user who started the process
+    # this enables volumes to have data (logs, etc) accessible to current user, otherwise logs/etc are created with 100999 user (rootless)
+    # https://github.com/itzg/docker-minecraft-server/issues/1934#issuecomment-1407581582
+    # user: 1000:1000
     ports:
     - 9${BUILD}:9000
+    environment:
+      SONAR_LOG_LEVEL: ${SONAR_LOG_LEVEL} 
     volumes:
-      - ~/sq/${SQ_VERSION}-${DB}/sqExtensions:/opt/sonarqube/extensions/plugins
-      - ~/sq/${SQ_VERSION}-${DB}/sqConf:/opt/sonarqube/conf
-      - ~/sq/${SQ_VERSION}-${DB}/sqLogs:/opt/sonarqube/logs
-      - ~/sq/${SQ_VERSION}-${DB}/sqData:/opt/sonarqube/data
+      - plugins:/opt/sonarqube/extensions/plugins
+      - logs:/opt/sonarqube/logs
+      - esdata:/opt/sonarqube/data
     profiles:
       - sqh2
   sqpg:
-    container_name: sq${BUILD}
-    image: sonarqube:${SQ_VERSION}
+    container_name: sqtester${BUILD}
+    image: sonarqube:${DOCKER_FULL_TAG}
+    # user: 0:0
     ports:
     - 9${BUILD}:9000
     environment:
       SONAR_JDBC_USERNAME: ${SONAR_JDBC_USERNAME}
       SONAR_JDBC_PASSWORD: ${SONAR_JDBC_PASSWORD}
       SONAR_JDBC_URL: ${SONAR_JDBC_URL}
-      SONAR_LOG_LEVEL: DEBUG
+      SONAR_LOG_LEVEL: ${SONAR_LOG_LEVEL}
     volumes:
-      - ~/sq/${SQ_VERSION}-${DB}/sqExtensions:/opt/sonarqube/extensions/plugins
-      - ~/sq/${SQ_VERSION}-${DB}/sqConf:/opt/sonarqube/conf
-      - ~/sq/${SQ_VERSION}-${DB}/sqLogs:/opt/sonarqube/logs
-      - ~/sq/${SQ_VERSION}-${DB}/sqData:/opt/sonarqube/data
+      - plugins:/opt/sonarqube/extensions/plugins
+      - logs:/opt/sonarqube/logs
+      - esdata:/opt/sonarqube/data       
     profiles:
       - sqdb
   db:
-    container_name: pgsql-${DB_VERSION}-${SQ_VERSION}
+    container_name: sqtester-${BUILD}-${DB}
     image: postgres:${DB_VERSION}
+    # user: 0:0
     ports:
       - 5${BUILD}:5432
     environment:
@@ -40,11 +46,15 @@ services:
       POSTGRES_PASSWORD: ${SONAR_JDBC_PASSWORD}
       POSTGRES_DB: sonardb
     volumes:
-      - ~/sq/${SQ_VERSION}-${DB}-${DB_VERSION}/postgres:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
     profiles:
       - dbs
 volumes:
-  sqExtensions:
-    name: sqExtensions
-  sqData:
-    name: sqData
+  plugins:
+    name: sqtester-${SQ_VERSION}-${DB}-plugins
+  logs:
+    name: sqtester-${SQ_VERSION}-${DB}-logs
+  esdata:
+    name: sqtester-${SQ_VERSION}-${DB}-esdata
+  pgdata:
+    name: sqtester-${SQ_VERSION}-${DB}-db

@@ -21,10 +21,10 @@ def parse_cli_args():
 
     # optional arguments
     my_parser.add_argument(
-        '-vv',
+        '-v',
         '--verbose',
         action='store_true',
-        help='enable verbose output')
+        help='enable sonarqube startup verbose debug output')
 
     my_parser.add_argument(
         '-db',
