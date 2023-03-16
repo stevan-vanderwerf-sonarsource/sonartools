@@ -9,6 +9,10 @@ Additionally, docker-compose needs to be >= v1.28.0 to take advantage of the --p
 The script is run by calling the sonar.py entrypoint, for example:
 `python3 sonar.py -up ee980`
 
+Any tag/version of SonarQube available in Dockerhub can be used including (except Datacenter edition), but each tag much be 3 digits, e.g.
+* Community Edition: ce791 (oldest available tag)
+* Developer Edition: de899
+
 # Tips
 To make things easier you can add the following lines to your `~/.bashrc` file:
 
@@ -39,7 +43,7 @@ run SonarQube with a specific version of an external database
     sonarup ee990 -db pg -dbv 15
     
 # Docker Desktop configuration
-This script can work as a command line tool only, or it can be run in conjunction with Docker Desktop. Check your `docker context` to see if your Docker configuration is command line only or if it is set to 'sync' with Docker Desktop
+This script can work as a command line tool only, or it can be run in conjunction with Docker Desktop. Check your `docker context` to see if your Docker configuration is command line only or if it is set to run Docker powering the Docker Desktop (in which case the Containers/Images/Volumes will be displayed in Docker Desktop UI)
 
     # list the available Docker 'contexts'
     $>  docker context ls
