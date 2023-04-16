@@ -37,3 +37,4 @@ def update_tags():
     versions = fetch_versions(index_url, token, image_name='library/sonarqube')
     with open('sqtagmaster.json', 'w') as sqtagmaster:
         sqtagmaster.write(json.dumps(versions))
+        print('done')
