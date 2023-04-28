@@ -9,7 +9,7 @@ services:
     # https://github.com/itzg/docker-minecraft-server/issues/1934#issuecomment-1407581582
     # user: 1000:1000
     ports:
-    - 9${BUILD}:9000
+    - 9000:9000
     environment:
       SONAR_LOG_LEVEL: ${SONAR_LOG_LEVEL} 
     volumes:
@@ -23,7 +23,7 @@ services:
     image: sonarqube:${DOCKER_FULL_TAG}
     # user: 0:0
     ports:
-    - 9${BUILD}:9000
+    - 9000:9000
     environment:
       SONAR_JDBC_USERNAME: ${SONAR_JDBC_USERNAME}
       SONAR_JDBC_PASSWORD: ${SONAR_JDBC_PASSWORD}
