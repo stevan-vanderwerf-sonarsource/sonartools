@@ -35,6 +35,6 @@ def update_tags():
     index_url = 'https://index.docker.io'
     token = get_token(auth_url='https://auth.docker.io', image_name='library/sonarqube')
     versions = fetch_versions(index_url, token, image_name='library/sonarqube')
-    with open('sqtagmaster.json', 'w') as sqtagmaster:
-        sqtagmaster.write(json.dumps(versions))
+    with open('sonartagmaster.json', 'w') as sonartagmaster:
+        sonartagmaster.write(json.dumps(versions))
         print('done')

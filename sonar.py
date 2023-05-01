@@ -26,9 +26,9 @@ def main():
         # e.g. 9.5.0-enterprise
         tag = tags.get(version)
         # e.g. 950 - if statement to catch sq dn
-        tag_num = version[len(version)-3:] 
+        tag_num = version[2:] 
         # e.g. 9950
-        port = int('9' + tag_num)
+        # port = int('9' + tag_num)
         # e.g. '9.6', '10', '11', '12', '13', '14', '15' for pg, '2017', '2019' for ms, '18', '21' for or
         dbv = '13' if output.databaseversion is None else output.databaseversion[0]
 

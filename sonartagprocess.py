@@ -18,7 +18,7 @@ def dictionary_entry(i,sumdigits):
 
 def update_dictionary():
     # Opening JSON file
-    with open('sqtagmaster.json') as json_file:
+    with open('sonartagmaster.json') as json_file:
         data = json.load(json_file)
 
         # Iterates through Docker tags, creating corresponding short form as dictionary, e.g. {ee891:8.9.1-enterprise}
