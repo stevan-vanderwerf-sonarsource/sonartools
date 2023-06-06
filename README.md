@@ -9,9 +9,9 @@ Additionally, docker-compose needs to be >= v1.28.0 to take advantage of the --p
 The script is run by calling the sonar.py entrypoint, for example:
 `python3 sonar.py -up ee980`
 
-Any tag/version of SonarQube available in Dockerhub can be used including (except Datacenter edition), but each tag much be 3 digits, e.g.
+Any tag/version of SonarQube available in Dockerhub can be used including (except Datacenter edition), but each tag much be 3 or 4 digits, e.g.
 * Community Edition: ce791 (oldest available tag)
-* Developer Edition: de899
+* Enterprise Edition: ee1000
 
 # Tips
 To make things easier you can add the following lines to your `~/.bashrc` file:
