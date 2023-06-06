@@ -4,6 +4,11 @@ Tools for testing multiple versions of SonarQube using Docker images
 # Pre-requisites
 The pre-requisites for running this script are having docker and docker-compose installed. 
 Additionally, docker-compose needs to be >= v1.28.0 to take advantage of the --profile parameter
+The script will expect an .env file with a minimum of the following variables (you can populate the username/password with your choice):
+    
+    SONAR_JDBC_USERNAME=
+    SONAR_JDBC_PASSWORD=
+    SONAR_JDBC_URL=jdbc:postgresql://db:5432/sonardb
 
 # Running script
 The script is run by calling the sonar.py entrypoint, for example:
